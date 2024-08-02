@@ -13,14 +13,14 @@ import java.util.UUID;
 @Configuration
 @Slf4j
 public class FilterConfig implements Filter {
-    private final String CORRELATION_ID = "X-Correlation-Id";
+    private final String CORRELATION_ID_HEADER = "X-Correlation-Id";
+    private final String CORRELATION_ID = "correlationId";
 
     @Override
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        log.info("Intercepted coming request for setting MDC context");
         final String correlationId = getCorrelationIdFromHeader(httpServletRequest);
         log.info("Correlation id is set as: " + correlationId);
         MDC.put(CORRELATION_ID, correlationId);
@@ -28,7 +28,7 @@ public class FilterConfig implements Filter {
     }
 
     private String getCorrelationIdFromHeader(final HttpServletRequest request) {
-        String correlationId = request.getHeader(CORRELATION_ID);
+        String correlationId = request.getHeader(CORRELATION_ID_HEADER);
         if (StringUtils.isBlank(correlationId)) {
             correlationId = generateUniqueCorrelationId();
         }
