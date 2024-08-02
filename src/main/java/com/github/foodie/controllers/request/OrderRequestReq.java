@@ -2,7 +2,12 @@ package com.github.foodie.controllers.request;
 
 import com.github.foodie.constants.PaymentType;
 import com.github.foodie.dtos.PointDto;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
+import validation.EnumValue;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,11 +16,17 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderRequestReq {
+    @NotNull(message = "customerId not provided")
     private UUID customerId;
+    @NotNull(message = "restaurantId not provided")
     private UUID restaurantId;
     private List<UUID> items;
-    private PaymentType paymentType;
-    private PointDto restaurantLocation;
-    private PointDto deliveryLocation;
+    @EnumValue(enumClass = PaymentType.class, message = "Invalid payment type")
+    @NotNull(message = "payment can not be null")
+    private String paymentType;
+    @NotNull(message = "restaurantLocation not provided")
+    private @Valid PointDto restaurantLocation;
+    @NotNull(message = "deliveryLocation not provided")
+    private @Valid PointDto deliveryLocation;
 
 }

@@ -1,6 +1,7 @@
 package com.github.foodie.services.impl;
 
 import com.github.foodie.constants.OrderRequestStatusType;
+import com.github.foodie.constants.PaymentType;
 import com.github.foodie.controllers.request.OrderRequestReq;
 import com.github.foodie.entities.CustomerEntity;
 import com.github.foodie.entities.OrderRequestEntity;
@@ -52,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
                 GeometryUtil.createPoint(orderRequestReq.getRestaurantLocation()));
         orderRequestEntity.setDeliveryLocation(
                 GeometryUtil.createPoint(orderRequestReq.getDeliveryLocation()));
-        orderRequestEntity.setPaymentType(orderRequestReq.getPaymentType());
+        orderRequestEntity.setPaymentType(PaymentType.valueOf(orderRequestReq.getPaymentType()));
         orderRequestEntity.setOrderRequestStatusType(OrderRequestStatusType.PENDING);
         orderRequestEntity.setItems(orderRequestReq.getItems());
 
