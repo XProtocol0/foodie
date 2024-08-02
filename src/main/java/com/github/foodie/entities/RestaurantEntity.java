@@ -5,7 +5,6 @@ import lombok.Data;
 import org.locationtech.jts.geom.Point;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -21,7 +20,7 @@ public class RestaurantEntity {
     @JoinColumn(name = "user_id")
     private UserAccountEntity userAccountEntity;
 
-    @Column(name = "user_id", updatable = false, insertable = false)
+    @Column(name = "user_id", insertable=false, updatable=false)
     private Long userId;
 
     @Column(name = "address")
@@ -35,9 +34,6 @@ public class RestaurantEntity {
 
     @Column(name = "closing_hour")
     private Integer closingHour;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MenuEntity> menuEntityList;
 
     @Column(name = "rating")
     private BigDecimal rating;
