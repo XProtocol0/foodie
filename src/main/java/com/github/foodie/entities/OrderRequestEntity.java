@@ -2,11 +2,13 @@ package com.github.foodie.entities;
 
 import com.github.foodie.constants.OrderRequestStatusType;
 import com.github.foodie.constants.PaymentType;
+import com.github.foodie.converters.UUIDListConvertor;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.locationtech.jts.geom.Point;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -34,8 +36,9 @@ public class OrderRequestEntity {
     @Column(name = "restaurant_id")
     private UUID restaurantId;
 
-    @Column(name = "items", columnDefinition = "jsonb")
-    private Object items;
+    @Convert(converter = UUIDListConvertor.class)
+    @Column(name = "items")
+    private List<UUID> items;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_type")

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Point;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +18,8 @@ public class OrderRequestDto {
     private Point restaurantLocation;
     private Point deliveryLocation;
     private CustomerDto customer;
-    private ShipperDto shipper;
+    private UUID restaurantId;
+    private List<String> items;
     private PaymentType paymentType;
     private OrderRequestStatusType orderRequestStatusType;
     private Instant createdOn;
