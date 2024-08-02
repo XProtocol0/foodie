@@ -1,6 +1,7 @@
 package com.github.foodie.controllers;
 
 import com.github.foodie.controllers.request.RegisterRestaurantReq;
+import com.github.foodie.controllers.response.GenericResponse;
 import com.github.foodie.services.RestaurantService;
 import net.logstash.logback.marker.LogstashMarker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @PostMapping("/register")
-    public ResponseEntity<UUID> registerRestaurant(@RequestBody RegisterRestaurantReq req) {
+    public ResponseEntity<GenericResponse<UUID>> registerRestaurant(@RequestBody RegisterRestaurantReq req) {
         LogstashMarker markers = append("method", "registerRestaurant");
         UUID id = restaurantService.registerRestaurant(req);
-        return ResponseEntity.ok(id);
+        return ResponseEntity.ok(new GenericResponse<>(id));
     }
 }

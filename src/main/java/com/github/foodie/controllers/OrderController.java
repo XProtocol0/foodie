@@ -1,6 +1,7 @@
 package com.github.foodie.controllers;
 
 import com.github.foodie.controllers.request.OrderRequestReq;
+import com.github.foodie.controllers.response.GenericResponse;
 import com.github.foodie.services.OrderService;
 import jakarta.validation.Valid;
 import net.logstash.logback.marker.LogstashMarker;
@@ -22,9 +23,10 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("request")
-    public ResponseEntity<String> orderRequest(@RequestBody @Valid OrderRequestReq orderRequestReq) {
+    public ResponseEntity<GenericResponse<String>> orderRequest(@RequestBody @Valid OrderRequestReq orderRequestReq) {
         LogstashMarker marker = append("method", "orderRequest");
         orderService.requestOrder(orderRequestReq);
-        return ResponseEntity.ok("Order requested");
+        return ResponseEntity.ok(
+                new GenericResponse<>(true, "Order requested", null));
     }
 }

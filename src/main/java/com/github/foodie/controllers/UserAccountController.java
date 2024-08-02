@@ -1,6 +1,7 @@
 package com.github.foodie.controllers;
 
 import com.github.foodie.controllers.request.RegisterUserReq;
+import com.github.foodie.controllers.response.GenericResponse;
 import com.github.foodie.services.UserAccountService;
 import net.logstash.logback.marker.LogstashMarker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,10 @@ public class UserAccountController {
     private UserAccountService userAccountService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterUserReq registerUserReq) {
+    public ResponseEntity<GenericResponse<String>> registerUser(@RequestBody RegisterUserReq registerUserReq) {
         LogstashMarker marker = append("method", "registerUser");
         userAccountService.registerUser(registerUserReq);
-        return ResponseEntity.ok("User successfully registered");
+        return ResponseEntity.ok(
+                new GenericResponse<>(true, "User successfully registered", null));
     }
 }

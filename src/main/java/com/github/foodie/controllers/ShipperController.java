@@ -1,6 +1,7 @@
 package com.github.foodie.controllers;
 
 import com.github.foodie.controllers.request.RegisterShipperReq;
+import com.github.foodie.controllers.response.GenericResponse;
 import com.github.foodie.services.ShipperService;
 import net.logstash.logback.marker.LogstashMarker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,10 @@ public class ShipperController {
     private ShipperService shipperService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerShipper(@RequestBody RegisterShipperReq registerShipperReq) {
+    public ResponseEntity<GenericResponse<String>> registerShipper(@RequestBody RegisterShipperReq registerShipperReq) {
         LogstashMarker marker = append("method", "registerShipper");
         shipperService.registerShipper(registerShipperReq);
-        return ResponseEntity.ok("Shipper registered successfully");
+        return ResponseEntity.ok(
+                new GenericResponse<>(true, "Shipper registered successfully", null));
     }
 }

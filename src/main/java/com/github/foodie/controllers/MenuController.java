@@ -1,5 +1,6 @@
 package com.github.foodie.controllers;
 
+import com.github.foodie.controllers.response.GenericResponse;
 import com.github.foodie.dtos.MenuDto;
 import com.github.foodie.services.MenuService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +26,9 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping
-    public ResponseEntity<List<MenuDto>> getItemsByRestaurant(@RequestParam UUID restaurantId) {
+    public ResponseEntity<GenericResponse<List<MenuDto>>> getItemsByRestaurant(@RequestParam UUID restaurantId) {
         LogstashMarker markers = append("method", "getItemsByRestaurant");
         log.info(markers, "Getting menu items for restaurant with id: {}", restaurantId);
-        return ResponseEntity.ok(menuService.getItemsByRestaurant(restaurantId));
+        return ResponseEntity.ok(new GenericResponse<>(menuService.getItemsByRestaurant(restaurantId)));
     }
 }
