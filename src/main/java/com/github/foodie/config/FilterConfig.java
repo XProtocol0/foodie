@@ -22,7 +22,6 @@ public class FilterConfig implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         final String correlationId = getCorrelationIdFromHeader(httpServletRequest);
-        log.info("Correlation id is set as: " + correlationId);
         MDC.put(CORRELATION_ID, correlationId);
         filterChain.doFilter(servletRequest, servletResponse);
     }
