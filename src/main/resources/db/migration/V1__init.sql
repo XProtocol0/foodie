@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS order_request(
     delivery_location Geometry(Point, 4326),
     customer_id UUID REFERENCES customer,
     restaurant_id UUID,
-    items JSONB,
+    items text,
     payment_type VARCHAR(30),
     order_request_status VARCHAR(30),
     created_on TIMESTAMP WITHOUT TIME ZONE,
@@ -93,4 +93,9 @@ CREATE TABLE IF NOT EXISTS menu(
     price NUMERIC,
     vegetarian BOOLEAN,
     ingredients VARCHAR(200)
+);
+
+CREATE TABLE IF NOT EXISTS user_roles(
+    user_id bigint not null,
+    roles varchar(30) check(roles in ('ADMIN', 'CUSTOMER', 'SHIPPER', 'RESTAURANT'))
 );
