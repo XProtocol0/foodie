@@ -5,9 +5,13 @@ import com.github.foodie.dtos.CustomerDto;
 import com.github.foodie.dtos.OrderRequestDto;
 import com.github.foodie.entities.CustomerEntity;
 import com.github.foodie.entities.UserAccountEntity;
+import com.github.foodie.exceptions.Errors;
+import com.github.foodie.exceptions.ServiceException;
 import com.github.foodie.repositories.CustomerRepository;
 import com.github.foodie.services.CustomerService;
 import com.github.foodie.services.UserAccountService;
+import lombok.extern.slf4j.Slf4j;
+import net.logstash.logback.marker.LogstashMarker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +20,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import static net.logstash.logback.marker.Markers.append;
+
 @Service
+@Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
@@ -38,9 +45,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerEntity getCustomer(UUID customerId) {
+        LogstashMarker marker = append("method", "getCustomer");
+        log.info(marker, "getting customer for customerId: {}", customerId);
         CustomerEntity customerEntity = customerRepository.findById(customerId).orElse(null);
         if(Objects.isNull(customerEntity)) {
-            //show error
+            log.info(marker, "customer not found for given customerId: {}", customerId);
+            throw ServiceException.badRequest(Errors.CUSTOMER_NOT_FOUND,
+                    Errors.errorMap.get(Errors.CUSTOMER_NOT_FOUND));
         }
         return customerEntity;
     }
