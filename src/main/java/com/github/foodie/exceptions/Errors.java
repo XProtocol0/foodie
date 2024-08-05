@@ -15,11 +15,14 @@ public interface Errors {
 
     String ORDER_REQUEST_NOT_FOUND = "FD-ORD-001";
 
+    String OSRM_ROUTE_DISTANCE_ERROR = "FD-OSRM-001";
+
     Map<String, String> errorMap = new HashMap<String, String>() {{
         put(USER_NOT_FOUND, "User not found");
         put(CUSTOMER_NOT_FOUND, "Customer not found");
         put(RESTAURANT_NOT_FOUND, "Restaurant not found");
         put(MENU_ITEM_NOT_FOUND, "Menu item not found");
         put(ORDER_REQUEST_NOT_FOUND, "Order request not found");
+        put(OSRM_ROUTE_DISTANCE_ERROR, "Error while getting route distance from OSRM");
     }};
 }
