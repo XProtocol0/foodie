@@ -5,18 +5,27 @@ import com.github.foodie.dtos.OrderRequestDto;
 import com.github.foodie.dtos.ShipperDto;
 import com.github.foodie.entities.ShipperEntity;
 import com.github.foodie.entities.UserAccountEntity;
+import com.github.foodie.exceptions.Errors;
+import com.github.foodie.exceptions.ServiceException;
 import com.github.foodie.repositories.ShipperRepository;
 import com.github.foodie.services.ShipperService;
 import com.github.foodie.services.UserAccountService;
 import com.github.foodie.utils.GeometryUtil;
+import lombok.extern.slf4j.Slf4j;
+import net.logstash.logback.marker.LogstashMarker;
+import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+import static net.logstash.logback.marker.Markers.append;
+
 @Service
+@Slf4j
 public class ShipperServiceImpl implements ShipperService {
 
     @Autowired
@@ -68,5 +77,32 @@ public class ShipperServiceImpl implements ShipperService {
     @Override
     public List<OrderRequestDto> getAllOrder() {
         return List.of();
+    }
+
+    @Override
+    public List<ShipperEntity> getTenNearestShipper(Point location) {
+        LogstashMarker markers = append("method", "getTenNearestShipper");
+        log.info(markers, "getting ten nearest shipper to location: {}", location);
+        List<ShipperEntity> shipperEntityList = shipperRepository.findNearest10Shippers(location);
+
+        if(CollectionUtils.isEmpty(shipperEntityList)) {
+            log.info(markers, "no shipper found");
+            throw ServiceException.internalError(Errors.NO_SHIPPER_AVAILABLE,
+                    Errors.errorMap.get(Errors.NO_SHIPPER_AVAILABLE));
+        }
+        return shipperEntityList;
+    }
+
+    @Override
+    public List<ShipperEntity> getTenNearbyHighestRatedShipper(Point location) {
+        LogstashMarker markers = append("method", "getTenNearbyHighestRatedShipper");
+        log.info(markers, "getting ten highest rated shipper which are nearby: {}", location);
+        List<ShipperEntity> shipperEntityList = shipperRepository.findTenNearbyTopRatedShipper(location);
+        if(CollectionUtils.isEmpty(shipperEntityList)) {
+            log.info(markers, "no shipper found");
+            throw ServiceException.internalError(Errors.NO_SHIPPER_AVAILABLE,
+                    Errors.errorMap.get(Errors.NO_SHIPPER_AVAILABLE));
+        }
+        return shipperEntityList;
     }
 }
