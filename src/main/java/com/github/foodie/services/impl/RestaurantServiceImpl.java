@@ -48,6 +48,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantEntity.setOpeningHour(req.getOpeningHour());
         restaurantEntity.setClosingHour(req.getClosingHour());
         restaurantEntity.setLocation(GeometryUtil.createPoint(req.getLocation()));
+        restaurantEntity.setZipCode(req.getZipcode());
         restaurantRepository.save(restaurantEntity);
         return restaurantEntity;
     }
