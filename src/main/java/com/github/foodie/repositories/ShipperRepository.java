@@ -12,17 +12,17 @@ import java.util.UUID;
 
 @Repository
 public interface ShipperRepository extends JpaRepository<ShipperEntity, UUID> {
-    @Query(value = "SELECT s.*, ST_Distance(s.location, :location) AS distance " +
+    @Query(value = "SELECT s.*, ST_Distance(s.location, ?1) AS distance " +
             "FROM shipper s " +
-            "WHERE s.available = true AND ST_DWithin(s.location, :location, 1000) " +
-            "ORDER BY d.distance DESC " +
+            "WHERE s.available = true AND ST_DWithin(s.location, ?1, 1000) " +
+            "ORDER BY distance " +
             "LIMIT 10", nativeQuery = true)
     List<ShipperEntity> findNearest10Shippers(Point location);
 
-    @Query(value = "SELECT s.*, ST_Distance(s.location :location) AS distance " +
+    @Query(value = "SELECT s.*, ST_Distance(s.location, ?1) AS distance " +
             "FROM shipper s " +
-            "WHERE s.available = true AND ST_DWithin(s.location, :location, 2000) " +
-            "ORDER BY d.rating " +
+            "WHERE s.available = true AND ST_DWithin(s.location, ?1, 2000) " +
+            "ORDER BY s.rating DESC " +
             "LIMIT 10", nativeQuery = true)
     List<ShipperEntity> findTenNearbyTopRatedShipper(Point location);
 }
