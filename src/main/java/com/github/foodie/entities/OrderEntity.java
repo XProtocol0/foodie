@@ -34,9 +34,9 @@ public class OrderEntity {
     @Column(name = "order_status")
     private OrderStatusType orderStatus;
 
-    @OneToOne
-    @JoinColumn(name = "payment_id")
-    private PaymentEntity paymentEntity;
+//    @OneToOne
+//    @JoinColumn(name = "payment_id")
+//    private PaymentEntity paymentEntity;
 
     @Column(name = "created_on")
     private Instant createdOn;

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,5 +54,20 @@ public class MenuServiceImpl implements MenuService {
         }
 
         return menuEntityList.stream().map(MenuDto::fromEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public BigDecimal getTotalAmountOfItems(List<UUID> menuItems) {
+        LogstashMarker marker = append("method", "getTotalAmountOfItems");
+        log.info(marker, "getting total amount of items");
+        List<MenuEntity> menuEntityList = menuRepository.findAllById(menuItems);
+        if(CollectionUtils.isEmpty(menuEntityList)) {
+            log.info(marker, "no menu item found found for: {}", menuItems);
+            throw ServiceException.badRequest(
+                    Errors.MENU_ITEM_NOT_FOUND, Errors.errorMap.get(Errors.MENU_ITEM_NOT_FOUND));
+        }
+        return menuEntityList.stream()
+                .map(MenuEntity::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
