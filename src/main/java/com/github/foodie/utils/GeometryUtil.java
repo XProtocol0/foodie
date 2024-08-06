@@ -10,7 +10,7 @@ public class GeometryUtil {
     public static Point createPoint(PointDto pointDto) {
         GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
         Coordinate coordinate =
-                new Coordinate(pointDto.getCoordinates()[0], pointDto.getCoordinates()[1]);
+                new Coordinate(pointDto.getCoordinates()[1], pointDto.getCoordinates()[0]);
         return geometryFactory.createPoint(coordinate);
     }
 }
