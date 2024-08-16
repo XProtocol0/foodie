@@ -7,6 +7,7 @@ import net.logstash.logback.marker.LogstashMarker;
 import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ public class SurgeChargeCalculationStrategy implements DeliveryChargeCalculation
     @Value("${surge.multiplier}")
     private BigDecimal SURGE_MULTIPLIER;
 
+    @Lazy
     @Autowired
     private DistanceService distanceService;
 
