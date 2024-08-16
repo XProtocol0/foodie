@@ -1,9 +1,9 @@
-package validation;
+package com.github.foodie.validation;
 
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import validation.validator.EnumValueValidator;
+import com.github.foodie.validation.validator.EnumValueValidator;
 
 import java.lang.annotation.*;
 

@@ -1,8 +1,8 @@
-package validation.validator;
+package com.github.foodie.validation.validator;
 
+import com.github.foodie.validation.EnumValue;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import validation.EnumValue;
 
 import java.util.List;
 import java.util.stream.Collectors;
