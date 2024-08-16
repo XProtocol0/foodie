@@ -2,6 +2,7 @@ package com.github.foodie.entities;
 
 import com.github.foodie.constants.PaymentMethodType;
 import com.github.foodie.constants.PaymentStatusType;
+import com.github.foodie.constants.PaymentType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,9 +21,9 @@ public class PaymentEntity {
 
     @Column(name = "payment_method")
     @Enumerated(EnumType.STRING)
-    private PaymentMethodType paymentMethod;
+    private PaymentType paymentType;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "order_id")
     private OrderEntity orderEntity;
 
