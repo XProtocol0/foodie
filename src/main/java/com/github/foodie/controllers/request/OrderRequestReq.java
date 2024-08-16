@@ -3,11 +3,9 @@ package com.github.foodie.controllers.request;
 import com.github.foodie.constants.PaymentType;
 import com.github.foodie.dtos.PointDto;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
-import validation.EnumValue;
+import com.github.foodie.validation.EnumValue;
 
 import java.util.List;
 import java.util.UUID;

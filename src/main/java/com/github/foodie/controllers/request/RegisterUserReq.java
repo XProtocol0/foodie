@@ -4,7 +4,7 @@ import com.github.foodie.constants.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import validation.EnumValue;
+import com.github.foodie.validation.EnumValue;
 
 @Data
 public class RegisterUserReq {
