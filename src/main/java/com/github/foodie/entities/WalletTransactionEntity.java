@@ -21,9 +21,11 @@ public class WalletTransactionEntity {
     @Column(name = "amount")
     private BigDecimal amount;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type")
     private TransactionType transactionType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "transaction_method")
     private TransactionMethodType transactionMethodType;
 
@@ -40,6 +42,9 @@ public class WalletTransactionEntity {
 
     @Column(name = "wallet_id", updatable = false, insertable = false)
     private UUID walletId;
+
+    @Column(name = "transaction_id")
+    private String transactionId;
 
     @Column(name = "created_on")
     private Instant createdOn;
