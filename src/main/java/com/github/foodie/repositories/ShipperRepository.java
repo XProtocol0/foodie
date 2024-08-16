@@ -25,4 +25,5 @@ public interface ShipperRepository extends JpaRepository<ShipperEntity, UUID> {
             "ORDER BY s.rating DESC " +
             "LIMIT 10", nativeQuery = true)
     List<ShipperEntity> findTenNearbyTopRatedShipper(Point location);
+    ShipperEntity findByUserId(Long userId);
 }
