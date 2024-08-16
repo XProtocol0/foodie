@@ -23,20 +23,16 @@ public class OrderEntity {
     @Column(name = "order_request_id", updatable = false, insertable = false)
     private UUID orderRequestId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shipper_id")
-    private ShipperEntity shipperEntity;
-
-    @Column(name = "shipper_id", updatable = false, insertable = false)
+    @Column(name = "shipper_id")
     private UUID shipperId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatusType orderStatus;
 
-//    @OneToOne
-//    @JoinColumn(name = "payment_id")
-//    private PaymentEntity paymentEntity;
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private PaymentEntity paymentEntity;
 
     @Column(name = "created_on")
     private Instant createdOn;
