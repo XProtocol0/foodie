@@ -1,0 +1,3 @@
+BEGIN;
+ALTER TABLE wallet_transaction ADD COLUMN IF NOT EXISTS transaction_id VARCHAR(100);
+COMMIT;
